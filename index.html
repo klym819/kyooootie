@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Keepsake — for you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12211E;
+    --emerald:#0E3B36;
+    --emerald-deep:#092623;
+    --gold:#D4AF37;
+    --coral:#C1502E;
+    --cream:#F3E9D3;
+    --blush:#E8A6A0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--emerald-deep);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(212,175,55,0.08), transparent 60%);
+    color: var(--cream);
+    font-family: 'Josefin Sans', sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2 { font-family: 'Abril Fatface', serif; font-weight: 400; margin: 0; }
+
+  .frame {
+    border: 2px solid var(--gold);
+    position: relative;
+  }
+  .frame::before{
+    content:"";
+    position:absolute; inset: 6px;
+    border: 1px solid var(--gold);
+    pointer-events:none;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: 100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding: 40px 20px;
+    position: relative;
+    overflow:hidden;
+  }
+  .sunburst{
+    position:absolute; top:50%; left:50%;
+    width:900px; height:900px;
+    transform: translate(-50%,-50%);
+    background: repeating-conic-gradient(from 0deg, rgba(212,175,55,0.10) 0deg 4deg, transparent 4deg 12deg);
+    border-radius:50%;
+    z-index:0;
+  }
+  .hero > * { position:relative; z-index:1; }
+  .hero .eyebrow{
+    letter-spacing: 6px;
+    font-size: 13px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-size: clamp(42px, 8vw, 84px);
+    color: var(--cream);
+    text-shadow: 0 0 30px rgba(212,175,55,0.25);
+  }
+  .hero .sub{
+    margin-top: 18px;
+    max-width: 480px;
+    color: var(--blush);
+    font-size: 18px;
+  }
+  .open-btn{
+    margin-top: 44px;
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .open-btn:hover{ background: var(--gold); color: var(--emerald-deep); }
+
+  /* ---------- SECTIONS ---------- */
+  .contents{ display:none; }
+  .contents.shown{ display:block; }
+
+  section.wing{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 90px 24px;
+  }
+
+  .stub-divider{
+    display:flex; align-items:center; gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stub-divider .line{ flex:1; height:1px; background: var(--gold); opacity:0.5; }
+  .stub-divider .label{
+    color: var(--gold); letter-spacing: 4px; font-size: 12px; text-transform: uppercase;
+  }
+
+  section.wing h2{
+    font-size: clamp(28px, 5vw, 40px);
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+
+  .note{
+    background: var(--emerald);
+    padding: 28px 30px;
+    border-left: 3px solid var(--coral);
+    font-size: 17px;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+
+  /* Polaroid gallery */
+  .gallery{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+    gap: 24px;
+  }
+  .polaroid{
+    background: var(--cream);
+    padding: 10px 10px 24px;
+    color: var(--ink);
+    transform: rotate(-2deg);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  }
+  .polaroid:nth-child(even){ transform: rotate(2deg); }
+  .polaroid img{ width:100%; display:block; aspect-ratio: 1/1; object-fit: cover; background: #ccc; }
+  .polaroid figcaption{
+    text-align:center; font-family:'Abril Fatface', serif; font-size:14px; margin-top:10px;
+  }
+
+  /* Vinyl / playlist */
+  .vinyl-row{ display:flex; align-items:center; gap: 28px; flex-wrap:wrap; }
+  .vinyl{
+    width:120px; height:120px; border-radius:50%;
+    background: repeating-radial-gradient(circle at center, #1a1a1a 0px, #1a1a1a 3px, #262626 4px, #262626 6px);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .vinyl::after{
+    content:""; width:34px; height:34px; border-radius:50%;
+    background: var(--coral); border: 3px solid var(--gold);
+  }
+  .playlist-link{
+    color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold);
+    font-size:18px;
+  }
+
+  /* Postcard / maps */
+  .postcard{
+    background: var(--cream); color: var(--ink);
+    padding: 26px; display:flex; justify-content:space-between; gap:20px;
+    border: 1px dashed var(--emerald-deep);
+  }
+  .postcard .stamp{
+    border: 2px solid var(--coral); padding: 10px 14px; text-align:center; font-size:11px;
+    letter-spacing:1px; color: var(--coral); text-transform:uppercase; flex-shrink:0; height:fit-content;
+  }
+  .place-list a{ color: var(--emerald-deep); display:block; margin-bottom: 10px; font-size:16px;}
+
+  /* Coupons */
+  .coupon{
+    display:flex; justify-content:space-between; align-items:center;
+    border: 2px dashed var(--gold);
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .coupon .tag{ font-family:'Abril Fatface', serif; font-size:20px; color:var(--cream); }
+  .coupon .redeem{ color: var(--gold); font-size:12px; letter-spacing:2px; text-transform:uppercase; }
+
+  /* Future dates - boarding pass */
+  .pass{
+    background: var(--emerald);
+    border-left: 6px solid var(--gold);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .pass .dest{ font-family:'Abril Fatface', serif; font-size: 20px; }
+  .pass .status{ font-size: 12px; letter-spacing:2px; text-transform:uppercase; color: var(--gold); }
+
+  footer{
+    text-align:center; padding: 60px 20px 80px;
+    color: var(--blush); font-size: 14px; letter-spacing: 2px;
+  }
+
+  /* ---------- PASSWORD GATE ---------- */
+  #gate{
+    position: fixed; inset: 0;
+    background: var(--emerald-deep);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    z-index: 999;
+    padding: 20px;
+    text-align:center;
+  }
+  #gate h2{ color: var(--cream); font-size: clamp(24px,5vw,34px); margin-bottom: 20px; }
+  #gate input{
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--cream);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
+    padding: 12px 16px;
+    text-align:center;
+    letter-spacing: 2px;
+    width: 220px;
+    margin-bottom: 16px;
+  }
+  #gate input:focus{ outline: none; box-shadow: 0 0 0 2px rgba(212,175,55,0.3); }
+  #gate .gate-error{
+    color: var(--coral); font-size: 13px; letter-spacing:1px; height: 18px;
+  }
+</style>
+</head>
+<body>
+
+  <div id="gate">
+    <h2>this one's just for you</h2>
+    <input type="password" id="gate-input" placeholder="enter the password" autocomplete="off">
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+
+  <div class="hero">
+    <div class="sunburst"></div>
+    <div class="eyebrow">a little keepsake, made with love</div>
+    <h1>For [His Name]</h1>
+    <p class="sub">A small box of things I've tucked away for you — open it whenever you'd like.</p>
+    <button class="open-btn" onclick="document.getElementById('contents').classList.add('shown'); this.style.display='none'; document.getElementById('contents').scrollIntoView({behavior:'smooth'});">
+      Open the box
+    </button>
+  </div>
+
+  <div id="contents" class="contents">
+
+    <section class="wing">
+      <div class="stub-divider"><div class="line"></div><div class="label">01 — a note</div><div class="line"></div></div>
+      <h2>Before anything else</h2>
+      <div class="note">
+        Write your message to him here. This is the heart of the page — say whatever you'd actually say if he were sitting in front of you.
+      </div>
+    </section>
+
+    <section class="wing">
+      <div class="stub-divider"><div class="line"></div><div class="label">02 — photos</div><div class="line"></div></div>
+      <h2>Little moments</h2>
+      <div class="gallery">
+        <figure class="polaroid"><img src="images/photo1.jpg" alt=""><figcaption>caption one</figcaption></figure>
+        <figure class="polaroid"><img src="images/photo2.jpg" alt=""><figcaption>caption two</figcaption></figure>
+        <figure class="polaroid"><img src="images/photo3.jpg" alt=""><figcaption>caption three</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="wing">
+      <div class="stub-divider"><div class="line"></div><div class="label">03 — our songs</div><div class="line"></div></div>
+      <h2>Something to listen to</h2>
+      <div class="vinyl-row">
+        <div class="vinyl"></div>
+        <a class="playlist-link" href="https://open.spotify.com/playlist/YOUR_PLAYLIST_ID" target="_blank">Play our playlist →</a>
+      </div>
+    </section>
+
+    <section class="wing">
+      <div class="stub-divider"><div class="line"></div><div class="label">04 — places we've been</div><div class="line"></div></div>
+      <h2>On the map</h2>
+      <div class="postcard">
+        <div class="place-list">
+          <a href="https://maps.google.com/?q=YOUR_PLACE_1" target="_blank">Place one — a short memory</a>
+          <a href="https://maps.google.com/?q=YOUR_PLACE_2" target="_blank">Place two — a short memory</a>
+          <a href="https://maps.google.com/?q=YOUR_PLACE_3" target="_blank">Place three — a short memory</a>
+        </div>
+        <div class="stamp">wish you<br>were here</div>
+      </div>
+    </section>
+
+    <section class="wing">
+      <div class="stub-divider"><div class="line"></div><div class="label">05 — coupons</div><div class="line"></div></div>
+      <h2>Redeemable, any time</h2>
+      <div class="coupon"><span class="tag">One home-cooked dinner, my choice</span><span class="redeem">redeem</span></div>
+      <div class="coupon"><span class="tag">One massage, no complaints</span><span class="redeem">redeem</span></div>
+      <div class="coupon"><span class="tag">One day of doing whatever you want</span><span class="redeem">redeem</span></div>
+    </section>
+
+    <section class="wing">
+      <div class="stub-divider"><div class="line"></div><div class="label">06 — still to come</div><div class="line"></div></div>
+      <h2>Places left to go</h2>
+      <div class="pass"><span class="dest">Idea one</span><span class="status">pending</span></div>
+      <div class="pass"><span class="dest">Idea two</span><span class="status">pending</span></div>
+      <div class="pass"><span class="dest">Idea three</span><span class="status">pending</span></div>
+    </section>
+
+    <footer>made with love, for you</footer>
+  </div>
+
+  <script>
+    // 1. Set your password here — anything you want.
+    const PASSWORD = "changeme";
+
+    const gate = document.getElementById('gate');
+    const input = document.getElementById('gate-input');
+    const error = document.getElementById('gate-error');
+
+    // 2. Listen for the Enter key inside the password box.
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+
+    function checkPassword() {
+      // 3. Compare (lowercased, so capitalization doesn't matter) to what was typed.
+      if (input.value.trim().toLowerCase() === PASSWORD.toLowerCase()) {
+        gate.style.display = 'none'; // 4. Hide the gate entirely.
+      } else {
+        error.textContent = "not quite — try again";
+        input.value = "";
+      }
+    }
+
+    // 5. Put the cursor in the box automatically when the page loads.
+    input.focus();
+  </script>
+
+</body>
+</html>
