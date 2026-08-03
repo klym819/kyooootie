@@ -10,18 +10,19 @@
   :root{
     --ink:#12211E;
     --emerald:#0E3B36;
-    --emerald-deep:#092623;
+    --blue:#B5F0FF;
     --gold:#D4AF37;
     --coral:#C1502E;
     --cream:#F3E9D3;
     --blush:#E8A6A0;
+    --page:#FCCFFB
   }
 
   * { box-sizing: border-box; }
 
   body{
     margin:0;
-    background: var(--emerald-deep);
+    background: var(--page);
     background-image:
       radial-gradient(circle at 50% 0%, rgba(212,175,55,0.08), transparent 60%);
     color: var(--cream);
@@ -91,7 +92,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  .open-btn:hover{ background: var(--gold); color: var(--emerald-deep); }
+  .open-btn:hover{ background: var(--gold); color: var(--blue); }
 
   /* ---------- SECTIONS ---------- */
   .contents{ display:none; }
@@ -166,13 +167,13 @@
   .postcard{
     background: var(--cream); color: var(--ink);
     padding: 26px; display:flex; justify-content:space-between; gap:20px;
-    border: 1px dashed var(--emerald-deep);
+    border: 1px dashed var(--blue);
   }
   .postcard .stamp{
     border: 2px solid var(--coral); padding: 10px 14px; text-align:center; font-size:11px;
     letter-spacing:1px; color: var(--coral); text-transform:uppercase; flex-shrink:0; height:fit-content;
   }
-  .place-list a{ color: var(--emerald-deep); display:block; margin-bottom: 10px; font-size:16px;}
+  .place-list a{ color: var(--blue); display:block; margin-bottom: 10px; font-size:16px;}
 
   /* Coupons */
   .coupon{
@@ -204,7 +205,7 @@
   /* ---------- PASSWORD GATE ---------- */
   #gate{
     position: fixed; inset: 0;
-    background: var(--emerald-deep);
+    background: var(--blue);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     z-index: 999;
     padding: 20px;
