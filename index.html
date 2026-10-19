@@ -187,6 +187,9 @@
   }
   .coupon .tag{ font-family:'Abril Fatface', serif; font-size:20px; color:var(--coral); }
   .coupon .redeem{ color: var(--gold); font-size:12px; letter-spacing:2px; text-transform:uppercase; }
+  .coupon .redeem { cursor: pointer; }
+.coupon.used .tag { text-decoration: line-through; opacity: 0.5; }
+.coupon.used .redeem { cursor: default; }
 
   /* Future dates - boarding pass */
   .pass{
@@ -298,9 +301,9 @@
     <section class="wing">
       <div class="stub-divider"><div class="line"></div><div class="label">coupons</div><div class="line"></div></div>
       <h2>Redeemable, any time</h2>
-      <div class="coupon"><span class="tag">One home-cooked 3 course meal</span><span class="redeem">redeem</span></div>
-      <div class="coupon"><span class="tag">One whole body massage</span><span class="redeem">redeem</span></div>
-      <div class="coupon"><span class="tag">One day of Alan adventures, doing whatever you want</span><span class="redeem">redeem</span></div>
+      <div class="coupon"><span class="tag">One home-cooked 3 course meal</span><span class="redeem"onclick="redeemCoupon(this)">redeem</span></div>
+      <div class="coupon"><span class="tag">One whole body massage</span><span class="redeem"onclick="redeemCoupon(this)">redeem</span></div>
+      <div class="coupon"><span class="tag">One day of Alan adventures, doing whatever you want</span><span class="redeem"onclick="redeemCoupon(this)">redeem</span></div>
     </section>
 
     <section class="wing">
@@ -341,6 +344,10 @@
 
     // 5. Put the cursor in the box automatically when the page loads.
     input.focus();
+    function redeemCoupon(el) {
+  el.textContent = "redeemed";             // change the word
+  el.parentElement.classList.add('used');  // tag the whole coupon as used
+}
   </script>
 
 </body>
